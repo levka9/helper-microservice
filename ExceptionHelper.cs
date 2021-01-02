@@ -4,14 +4,16 @@ namespace Helper.Microservice
 {
     public class ExceptionHelper
     {
-        public static string GetMessages(Exception Exception, string Message = "")
+        public static string GetMessages(Exception Exception, string Message = "", bool IsFile = false)
         {
             if (Exception == null) return Message;
 
+            var breakLine = (IsFile) ? "\\r\\n" : string.Empty;
+
             var message = string.IsNullOrEmpty(Message) ? Exception.Message
-                                                        : $"{Message}\\r\\n {Exception.Message}";
-            
-            return GetMessages(Exception.InnerException, message);
+                                                        : $"{Message}{breakLine} {Exception.Message}";
+
+            return GetMessages(Exception.InnerException, message, IsFile);
         }
     }
 }
